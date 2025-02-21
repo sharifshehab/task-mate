@@ -3,10 +3,10 @@ import Header from "../pages/shared/Header";
 
 const Root = () => {
     return (
-        <div>
+        <>
             <Header></Header>
             <Outlet></Outlet>
-        </div>
+        </>
     );
 };
 
