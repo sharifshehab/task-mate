@@ -3,18 +3,20 @@ import { useForm } from "react-hook-form";
 // react icons
 import { RxCross1 } from "react-icons/rx";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAuth from "../hooks/useAuth";
 
 const AddForm = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const axios = useAxiosPublic();
+    const { user } = useAuth();
 
     const onSubmit = data => {
         const newTask = {
-                
+                user: user?.email,
                 title: data.title,
                 status: data.status,
-            timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString()
         }
 
         axios.post('/tasks', newTask)

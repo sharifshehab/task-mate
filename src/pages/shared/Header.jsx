@@ -3,10 +3,14 @@ import { useState } from "react";
 // react icons
 import { IoIosSearch } from "react-icons/io";
 import { CiMenuFries } from "react-icons/ci";
+import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 
 const Header = () => {
-      const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const { user,handleLogOut } = useAuth();
+  console.log(user);
 
     return (
       <header className="w-full bg-blue-500">
@@ -18,33 +22,28 @@ const Header = () => {
               className="w-[55px] "
             />
 
-            {/* nav links */}
-            {/* <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
-        <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-          home
-        </li>
-
-        <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-          features
-        </li>
-
-        <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-          blogs
-        </li>
-
-        <li className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize">
-          shop
-        </li>
-      </ul> */}
-
             {/* action buttons */}
-            <div className="items-center gap-[10px] flex">
-              <button className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize hover:text-[#3B9DF8] transition-all duration-300 sm:flex hidden">
-                Sign in
-              </button>
-              <button className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#3B9DF8] text-white hover:bg-blue-400 transition-all duration-300 sm:flex hidden">
-                Sign up
-              </button>
+          <div className="items-center gap-[10px] flex">
+            
+                            <div className="flex flex-col items-center justify-center">
+                                        <div className="w-10 rounded-full">
+                                            <img
+                                                referrerPolicy="no-referrer"
+                                                alt={user?.displayName}
+                                                src={user?.photoURL}
+                                            />
+                                        </div>
+                                      <h3>{user?.displayName}</h3>
+                            </div>
+            {
+              user ? <button onClick={() => handleLogOut()} className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#3B9DF8] text-white hover:bg-blue-400 transition-all duration-300 sm:flex hidden">
+                Log-out
+              </button> :
+                <Link to={'/login'}><button  className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#3B9DF8] text-white hover:bg-blue-400 transition-all duration-300 sm:flex hidden">
+                Login
+              </button></Link>
+}
+              
 
               <CiMenuFries
                 className="text-[1.8rem] mr-1 text-[#424242]c cursor-pointer md:hidden flex"
