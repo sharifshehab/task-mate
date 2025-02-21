@@ -1,37 +1,34 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Column from "../../components/Column";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DndContext } from "@dnd-kit/core";
 import AddForm from "../../components/AddForm";
 
 
 const Home = () => {
-    
-
-  // const axios = useAxiosPublic();
-  // const { data: tasks = [] } = useQuery({
-  //   queryKey: ["tasks"],
-  //   queryFn: async () => {
-  //     const res = await axios.get("/tasks");
-  //     return res.data;
-  //   },
-  // });
-
   const COLUMNS = [
     {id: "TODO", title: "To Do"},
     {id: "IN_PROGRESS", title: "Progress"},
     {id: "DONE", title: "Done"}
   ]
 
-  const InitialTasks = [
-    { id: "1", title: "feature 1", desc: "desc 1", status: "TODO" },
-    { id: "2", title: "feature 2", desc: "desc 2", status: "TODO" },
-    { id: "3", title: "feature 3", desc: "desc 3", status: "DONE" },
-    { id: "4", title: "feature 4", desc: "desc 4", status: "IN_PROGRESS" }
-  ];
+  const axios = useAxiosPublic();
+  const { data: InitialTasks = [] } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => {
+      const res = await axios.get("/tasks");
+      return res.data;
+    },
+  });
 
-  const [tasks, setTasks] = useState(InitialTasks);
+
+  const [tasks, setTasks] = useState([]);
+  useEffect(() => {
+    if (InitialTasks.length > 0) {
+      setTasks(InitialTasks)
+    }
+  },[InitialTasks])
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -43,16 +40,16 @@ const Home = () => {
     if (activeId === overId) return;
 
     setTasks((prevTasks) => {
-      const activeTask = prevTasks.find(task => task.id === activeId);
+      const activeTask = prevTasks.find(task => task._id === activeId);
 
       if (!activeTask) return prevTasks;
-      const updatedTasks = prevTasks.filter(task => task.id !== activeId);
+      const updatedTasks = prevTasks.filter(task => task._id !== activeId);
       const targetColumn = COLUMNS.find(col => col.id === overId);
 
       if (targetColumn) {
         updatedTasks.push({ ...activeTask, status: overId });
       } else {
-        const overIndex = updatedTasks.findIndex(task => task.id === overId);
+        const overIndex = updatedTasks.findIndex(task => task._id === overId);
         updatedTasks.splice(overIndex, 0, activeTask);
       }
       return updatedTasks;

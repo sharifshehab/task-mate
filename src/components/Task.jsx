@@ -5,7 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 const Task = ({ task }) => {
 
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-      id: task.id
+      id: task._id
     })
 
   
@@ -23,7 +23,6 @@ const Task = ({ task }) => {
       style={style}
     >
       <h4 className="text-lg">{task.title}</h4>
-      <p className="mt-2">{task.desc}</p>
     </div>
   );
 };

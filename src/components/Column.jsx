@@ -12,10 +12,10 @@ const Column = ({ column, tasks }) => {
       ref={setNodeRef}
       className="flex-1 font-semibold mb-4 shadow-md h-screen bg-teal-700 px-4">
       <h1>{column.title}</h1>
-      <SortableContext items={tasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
+      <SortableContext items={tasks.map(task => task._id)} strategy={verticalListSortingStrategy}>
         <div className="space-y-2">
         {tasks.map(task => (
-              <Task key={task.id} task={task}></Task>
+              <Task key={task._id} task={task}></Task>
           ))
           }
           </div>

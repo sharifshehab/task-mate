@@ -11,6 +11,7 @@ const AddForm = () => {
 
     const onSubmit = data => {
         const newTask = {
+                
                 title: data.title,
                 status: data.status,
             timestamp: new Date().toISOString()
