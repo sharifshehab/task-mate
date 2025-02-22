@@ -37,10 +37,10 @@ const UpdateTask = () => {
          <>
         
                     <div
-                        className={`w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 flex items-center justify-center`}
+                        className={`w-full h-screen fixed top-0 left-0 z-[200000000] bg-blue-500 transition-all duration-300 flex items-center justify-center`}
                     >
                         <div
-                            className={`w-[90%] sm:w-[80%] md:w-[35%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
+                            className={`w-[90%] sm:w-[80%] md:w-[35%] bg-[#fff] transition-all duration-300 mx-auto mt-8`}
                         >
                             <div
                                 className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
@@ -93,7 +93,7 @@ const UpdateTask = () => {
         
                                 <button
                                     type="submit"
-                                    className="py-2 px-4 w-full bg-[#3B9DF8] text-[#fff] rounded-md"
+                                    className="py-2 px-4 w-full bg-blue-500 text-[#fff]"
                                 >
                                    Update Task
                                 </button>

@@ -4,12 +4,14 @@ import { useForm } from "react-hook-form";
 import { RxCross1 } from "react-icons/rx";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAuth from "../hooks/useAuth";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AddForm = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const axios = useAxiosPublic();
     const { user } = useAuth();
+    const queryClient = useQueryClient();
 
     const onSubmit = data => {
         const newTask = {
@@ -23,6 +25,7 @@ const AddForm = () => {
             .then(res => {
                 if (res.data.insertedId) {
                     setIsModalOpen(false);
+                    queryClient.invalidateQueries(['tasks']);
                     reset();
                 }
         })
@@ -36,7 +39,7 @@ const AddForm = () => {
     return (
         <>
             <div className="text-center">
-                <button onClick={handleModal} className="px-4 py-2 bg-blue-500 my-5">Add Task</button>
+                <button onClick={handleModal} className="px-4 py-2 bg-blue-500 my-5 text-white hover:bg-blue-400">Add Task</button>
             </div>
 
             <div
@@ -49,11 +52,11 @@ const AddForm = () => {
                         isModalOpen
                             ? " scale-[1] opacity-100"
                             : " scale-[0] opacity-0"
-                    } w-[90%] sm:w-[80%] md:w-[35%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
+                    } w-[90%] sm:w-[80%] md:w-[35%] bg-[#fff]  transition-all duration-300 mx-auto mt-8`}
                 >
                     <div
                         className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
-                        <h1 className="text-[1.5rem] font-bold">
+                        <h1 className="text-[1.5rem] font-bold ">
                             Add New Task
                         </h1>
                         <RxCross1
@@ -104,7 +107,7 @@ const AddForm = () => {
 
                         <button
                             type="submit"
-                            className="py-2 px-4 w-full bg-[#3B9DF8] text-[#fff] rounded-md"
+                            className="py-2 px-4 w-full bg-blue-500 text-[#fff]"
                         >
                            Add Task
                         </button>

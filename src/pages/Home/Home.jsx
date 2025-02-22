@@ -9,12 +9,12 @@ import AddForm from "../../components/AddForm";
 const Home = () => {
   const COLUMNS = [
     {id: "TODO", title: "To Do"},
-    {id: "IN_PROGRESS", title: "Progress"},
+    {id: "IN_PROGRESS", title: "In Progress"},
     {id: "DONE", title: "Done"}
   ]
 
   const axios = useAxiosPublic();
-  const { data: InitialTasks = [] } = useQuery({
+  const { data: InitialTasks = [], refetch } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
       const res = await axios.get("/tasks");
@@ -24,6 +24,7 @@ const Home = () => {
 
 
   const [tasks, setTasks] = useState([]);
+
   useEffect(() => {
     if (InitialTasks.length > 0) {
       setTasks(InitialTasks)
@@ -60,11 +61,13 @@ const Home = () => {
   return <>
     <AddForm></AddForm>
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="flex space-x-4 p-4 bg-teal-950">
+      <div className="container mx-auto px-4">
+      <div className="flex flex-col md:flex-row justify-between gap-10">
       {COLUMNS.map(column => (
         <Column key={column.id} column={column} tasks={tasks.filter((task)=>task.status === column.id)}></Column>
       ))
-      }</div>
+          }</div>
+         </div>
     </DndContext>
   </>;
 };
