@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { user,handleLogOut } = useAuth();
-  console.log(user);
 
     return (
       <header className="w-full bg-blue-500">
