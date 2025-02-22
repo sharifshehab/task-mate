@@ -20,11 +20,13 @@ const Task = ({ task }) => {
 
   const deleteTask = (event, id) => {
     event.stopPropagation();
-     queryClient.invalidateQueries(['tasks']);
-        axios.delete(`/tasks/${id}`)
-                    .then(res => {
-                       console.log(res.data);
-                    })
+    
+      axios.delete(`/tasks/${id}`)
+        .then(res => {
+          if (res.data.deletedCount > 0) {
+                         queryClient.invalidateQueries(['tasks']);
+                      }
+      })
     };
 
   return (
